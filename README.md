@@ -39,7 +39,7 @@ postgres=#
 
 ## Configuration
 
-The container runs postgres in the foreground under a user called 'default'.
+The container runs postgres in the foreground under a user called 'postgres'.
 The data directory is stored at /postgres/data, and a minimal postgresql.conf
 is stored in the data directory.
 
