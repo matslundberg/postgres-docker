@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Paths to things
+DATADIR=/postgres/data
+
+# Lazily initialize database if needed
+if [[ ! -f $DATADIR/PG_VERSION ]]
+then
+  # Initialize the data directory
+  initdb $DATADIR -U postgres
+
+  # apply minimal configuration
+  cp -f /usr/local/etc/postgres/*.conf $DATADIR/
+
+  # set up default databases etc
+  cat /usr/local/scripts/init.sql | postgres \
+    --single -D $DATADIR postgres
+fi
+
+# Run postgres in the foreground
+exec postgres -D $DATADIR
