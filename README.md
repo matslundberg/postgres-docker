@@ -53,8 +53,9 @@ The default pg_hba.conf allows connections from any user on any host provided
 they have the MD5 password.
 
 ```
-#     database  user  source  auth
-host  all       all   all     md5
+#      database  user  source  auth
+host   all       all   all     md5
+local  all       all           md5
 ```
 
 To adjust the configuration of postgres, you can add \*.conf files to
@@ -97,26 +98,16 @@ container.
 
 ### Client Access
 
-If you need to try something in the psql client, the intended way to do this is
-to use two containers in a client-server setup. Start the server container with
-a name, then start a second container linking to that name, but running 'bash',
-or 'psql' instead of the default server startup script.
-
-Connecting a client to the above server would look like this:
+If you need to try something in the psql client, the easiest way to do this is
+to use `docker exec`, which will by default connect as the "postgres" user on a
+UNIX domain socket.
 
 ```
--bash$ docker run -ti \
->   --link postgres:server \
->   d11wtq/postgres \
->   psql -h server -U default
+-bash$ docker exec -ti server psql
 Password:
 
 psql (9.3.5)
 Type "help" for help.
 
-default=>
+postgres=#
 ```
-
-If you really want to work in a single container, you can run
-/usr/local/bin/start_postgres from a bash shell in the container. Press Ctrl-C
-to stop the server.
