@@ -2,7 +2,7 @@
 #
 # Runs PostgreSQL 9.3 on port 5432 with optional host persistence.
 
-FROM       d11wtq/ubuntu
+FROM       d11wtq/ubuntu:14.04
 MAINTAINER Chris Corbyn <chris@w3style.co.uk>
 
 ENV PG_VER 9.3.5
@@ -16,7 +16,7 @@ RUN cd /tmp;                                                        \
     tar xvjf *.tar.bz2; rm -f *.tar.bz2;                            \
     cd $PG_DIR;                                                     \
     ./configure --prefix=/usr/local;                                \
-    make && make install;                                           \
+    make world && make install-world;                               \
     cd; rm -rf /tmp/$PG_DIR
 
 RUN sudo useradd -s /bin/bash -m postgres
