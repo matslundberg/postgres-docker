@@ -15,7 +15,13 @@ then
   # set up default databases etc
   cat /usr/local/scripts/init.sql | postgres \
     --single -D $DATADIR postgres
+
 fi
 
+#exec echo "zip -r /wals/initial.zip $DATADIR"
+#exec 
+zip -r /wals/initial.zip $DATADIR
+
 # Run postgres in the foreground
-exec postgres -D $DATADIR
+#exec
+ postgres -D $DATADIR
