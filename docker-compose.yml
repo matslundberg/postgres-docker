@@ -1,0 +1,14 @@
+version: '3'
+services:
+  pg_pri:
+    build: postgres-primary
+    ports:
+    - "5432:5432"
+    volumes:
+    - ./postgres-primary/wals/:/wals
+  pg_sec:
+    build: postgres-secondary
+    ports:
+    - "5433:5432"
+    volumes:
+    - ./postgres-secondary/wals/:/wals

@@ -2,6 +2,9 @@
 
 # Paths to things
 DATADIR=/postgres/data
+BACKUPDIR=/postgres/backup/
+
+mkdir -p $BACKUPDIR
 
 # Lazily initialize database if needed
 if [[ ! -f $DATADIR/PG_VERSION ]]
@@ -20,8 +23,17 @@ fi
 
 #exec echo "zip -r /wals/initial.zip $DATADIR"
 #exec 
-zip -r /wals/initial.zip $DATADIR
+#zip -r /wals/initial.zip $DATADIR
+postgres -D $DATADIR >logfile 2>&1 &
+
+sleep 10
+
+pg_basebackup -h localhost -D $BACKUPDIR
+/wal-g.sh backup-push $BACKUPDIR
 
 # Run postgres in the foreground
 #exec
- postgres -D $DATADIR
+#postgres -D $DATADIR
+
+#sleep infinity
+tail -f logfile
