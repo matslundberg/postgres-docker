@@ -33,6 +33,7 @@ ADD postgres           /postgres
 ADD etc                /usr/local/etc
 ADD scripts            /usr/local/scripts
 ADD bin/start_postgres /usr/local/bin/start_postgres
+ADD bin/create_backup  /usr/local/bin/create_backup
 ADD bin/wal-g.sh       /wal-g.sh
 
 RUN sudo chmod 0755 /usr/local/bin/start_postgres

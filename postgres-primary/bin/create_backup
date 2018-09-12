@@ -1,0 +1,7 @@
+#!/bin/bash
+
+BACKUPDIR=/postgres/backup/
+
+rm -rf $BACKUPDIR/*
+pg_basebackup -h localhost -D $BACKUPDIR
+/wal-g.sh backup-push $BACKUPDIR

@@ -2,7 +2,6 @@
 
 # Paths to things
 DATADIR=/postgres/data
-BACKUPDIR=/postgres/backup/
 
 mkdir -p $BACKUPDIR
 
@@ -21,15 +20,12 @@ then
 
 fi
 
-#exec echo "zip -r /wals/initial.zip $DATADIR"
-#exec 
-#zip -r /wals/initial.zip $DATADIR
+# FIXME Starting Postgres in the background to be able to run create_backup
 postgres -D $DATADIR >logfile 2>&1 &
 
-sleep 10
+sleep 10 # FIXME Let postgres initiate before doing setup
 
-pg_basebackup -h localhost -D $BACKUPDIR
-/wal-g.sh backup-push $BACKUPDIR
+/usr/local/bin/create_backup
 
 # Run postgres in the foreground
 #exec

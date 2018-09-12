@@ -1,6 +1,8 @@
 #!/bin/bash
 
+# FIXME Let primary start fully before doing anything
 sleep 30 
+
 # Paths to things
 DATADIR=/postgres/data
 BACKUPDIR=/postgres/backup
@@ -9,19 +11,6 @@ rm -rf $DATADIR
 mkdir -p $DATADIR
 mkdir -p $BACKUPDIR
 
-#cp /wals/initial.zip $DATADIR
-#cd $DATADIR
-#unzip $DATADIR/initial.zip
-#mv $DATADIR/postgres/data/* .
-chown -R postgres: $DATADIR
-chmod -R 700 $DATADIR
-#rm -f $DATADIR/pg_xlog/*
-# apply minimal configuration
-#initdb $DATADIR -U postgres
-
-#sleep 10
-
-echo "/wal-g.sh backup-fetch $DATADIR LATEST"
 /wal-g.sh backup-fetch $DATADIR/ LATEST
 cp -f /usr/local/etc/postgres/*.conf $DATADIR/
 chown -R postgres: $DATADIR
